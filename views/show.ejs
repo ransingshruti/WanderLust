@@ -14,7 +14,8 @@
        
    </div>
   
-   <div class="card col-6 offset-3 show-card listing-card">
+ <div class="card col-lg-6 col-md-8 col-12 mx-auto show-card listing-card">
+
   <img src="<%= listing.img ? listing.img.url : '/images/placeholder.png' %>" class="card-img-top show-img" alt="listing_img">
 
   <div class="card-body">
@@ -58,10 +59,10 @@
 
    <!-- Reviews form -->
 
-   <div class="col-8 offset-3 mb-3">
-<% if(currUser && listing.owner && listing.owner._id.toString() !== currUser._id.toString()) { %>
-   <hr>
+   <div class="row justify-content-center mt-4">
+ <div class="card col-lg-5 col-md-6 col-12 mb-3 p-2 review-card">
 
+<% if(currUser && listing.owner && listing.owner._id.toString() !== currUser._id.toString()) { %>
 
       <h4>Leave a Review</h4>
       <form action="/listings/<%= listing._id%>/reviews" method="post" novalidate class="needs-validation">
@@ -72,8 +73,7 @@
 
          <div class="mb-3 mt-3">
              <label for="rating" class="form-label">Rating</label>
-
-         <fieldset class="starability-slot">
+          <fieldset class="starability-slot">
            
    <!-- <input type="range" min="1" max="5" id="rating" name="review[rating]" class="form-range" >   -->
   <input type="radio" id="no-rate" class="input-no-rate" name="rating" value="1" checked aria-label="No rating." />
@@ -117,10 +117,7 @@
       <h5 class="card-title">@<%= review.author ? review.author.username : 'Anonymous' %></h5>
       <p class="starability-result card-text" data-rating=<%= review.rating %> > </p>
       <div class="card-text"><%= review.comment %></div>
-     
-       
   
-
 
      <% if(currUser && review.author && currUser._id.toString() === review.author._id.toString()) { %>
 <form action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" method="POST">
@@ -138,13 +135,14 @@
       <%}%>
       
    </div>
+   </div>
 
    <!-- Geo Coding -->
 
-      <div class="col-6 offset-3 mb-3">
-         <h3> Where You'll be</h3>
-         <div id="map"></div>
-      </div>
+     <div class="col-12 col-md-8 offset-md-2 mb-3">
+    <h3>Where You'll be</h3>
+    <div id="map"></div>
+</div>
    </div>
 
    <script src="/js/map.js"></script>

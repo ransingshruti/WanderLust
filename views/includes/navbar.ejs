@@ -1,125 +1,85 @@
 <style>
-  /* NAVBAR stays fixed */
-  .navbar {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 5000;
-    background: white;
+  .navbar { 
+    position: fixed; top:0; width:100%; z-index:5000; 
+    background:white; border-bottom:1px solid #ddd;
   }
+  body { padding-top: 90px; }
 
-  /* Search Input */
-  .search-input {
-    border-radius: 25px;
-    padding: 10px 20px;
-  }
+  .search-input { border-radius:30px; padding:10px 20px; }
+  .search-btn { background:#fe424d; color:white; border:none; border-radius:25px; padding:10px 22px; }
 
-  /* SEARCH layout on small screens */
-  @media (max-width: 768px) {
-    .search-box {
-      flex-grow: 1;
-      margin: 0 10px;
+  /* LARGE SCREEN */
+  @media(min-width:992px){
+    .nav-desktop{
+      display:grid; grid-template-columns:200px 1fr auto;
+      align-items:center; padding:10px 25px; gap:20px;
     }
+    .nav-mobile,.mobile-search,#mobileMenu{ display:none!important; }
   }
 
-  /* SEARCH layout on large screens */
-  @media (min-width: 768px) {
-    .search-box {
-      max-width: 450px;
-      flex-grow: 1;
-      margin: 0 20px;
+  /* SMALL SCREEN */
+  @media(max-width:991px){
+    .nav-desktop{ display:none; }
+    .nav-mobile{
+      display:flex; justify-content:space-between;
+      padding:12px 15px;
     }
+    .mobile-search{ padding:10px; }
+    .mobile-search input{ width:100%; border-radius:30px; }
   }
-
-  /* MOBILE MENU (INSIDE FLOW so it pushes content down) */
-  #mobileMenu {
-    display: none;
-    background: white;
-    padding: 15px;
-    border-bottom: 1px solid #ddd;
-  }
-
-  /* Content pushed below navbar */
-  body {
-    padding-top: 70px;   /* NO GAP on large screen */
-  }
-  .search-icon{
-    background-color: #fe424d;
-  color: white;
-  border-radius: 25px;
-  padding: 10px 22px;
-  font-weight: 600;
-  border: none;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  box-shadow: 0px 2px 6px rgba(0,0,0,0.12);
-  transition: all 0.2s ease-in-out;
-    
-  }
-  .btn-search:hover {
-  background-color: #e83844;
-  transform: translateY(-2px);
-  box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
-}
-
 </style>
 
-
-<!-- TOP NAVBAR -->
-<nav class="navbar border-bottom">
-  <div class="container-fluid d-flex align-items-center">
-
-    <!-- LEFT -->
-    <a href="/listings" class="navbar-brand d-flex align-items-center">
-      <i class="fa-solid fa-compass fs-4 me-2"></i>
-      <span class="fw-bold">Explore</span>
-    </a>
-
-    <!-- CENTER SEARCH -->
-  <form class="search-box d-flex align-items-center" method="GET" action="/search">
+<!-- DESKTOP NAV -->
+<nav class="navbar nav-desktop">
   
-  <input 
-    name="q"
-    type="text" 
-    class="form-control search-input" 
-    placeholder="Search Destinations"
-    value="<%= typeof q !== 'undefined' ? q : '' %>"
-  >
+  <!-- LEFT LOGO -->
+  <a href="/listings" class="navbar-brand fw-bold">
+    <i class="fa-solid fa-compass text-danger fs-4 me-2"></i> Explore
+  </a>
 
-  <button class="btn btn-search ms-2 search-icon">
-    <i class="fa-solid fa-magnifying-glass"></i> Search
-  </button>
-
-</form>
-
-
-
-    <!-- RIGHT DESKTOP MENU -->
-    <div class="d-none d-md-flex align-items-center gap-4">
-      <a class="nav-link fw-bold" href="/listings/new">Airbnb your home</a>
-
-      <% if (!currUser) { %>
-        <a class="nav-link fw-bold" href="/signup">Sign Up</a>
-        <a class="nav-link fw-bold" href="/login">Log In</a>
-      <% } else { %>
-        <a class="nav-link fw-bold" href="/logout">Log Out</a>
-      <% } %>
-    </div>
-
-    <!-- MOBILE MENU BUTTON -->
-    <button class="btn border-0 d-md-none" id="toggleMenu">
-      <i class="fa-solid fa-bars fs-3"></i>
+  <!-- CENTER SEARCH -->
+  <form class="d-flex mx-auto" action="/search">
+    <input class="form-control search-input" name="q" placeholder="Search Destination">
+    <button class="search-btn ms-2">
+      <i class="fa-solid fa-magnifying-glass"></i>
     </button>
+  </form>
 
+  <!-- RIGHT MENU -->
+  <div class="d-flex gap-4">
+    <a class="nav-link fw-bold" href="/listings/new">Airbnb your home</a>
+
+    <% if (!currUser) { %>
+      <a class="nav-link fw-bold" href="/signup">Sign Up</a>
+      <a class="nav-link fw-bold" href="/login">Log In</a>
+    <% } else { %>
+      <a class="nav-link fw-bold" href="/logout">Log Out</a>
+    <% } %>
   </div>
+
 </nav>
 
+<!-- MOBILE NAV -->
+<nav class="navbar nav-mobile">
+  <a href="/listings" class="navbar-brand fw-bold">
+    <i class="fa-solid fa-compass text-danger fs-4 me-2"></i> Explore
+  </a>
 
-<!-- MOBILE MENU (pushes categories down) -->
-<div id="mobileMenu">
+  <button id="toggleMenu" class="btn border-0">
+    <i class="fa-solid fa-bars fs-3"></i>
+  </button>
+</nav>
+
+<!-- MOBILE SEARCH -->
+<div class="mobile-search">
+  <form action="/search">
+    <input class="form-control search-input" name="q" placeholder="Search Destination">
+  </form>
+</div>
+
+<!-- MOBILE MENU -->
+<div id="mobileMenu" style="display:none; padding:15px;">
   <ul class="list-unstyled text-center">
-
     <li><a class="nav-link fw-bold" href="/listings/new">Airbnb your home</a></li>
 
     <% if (!currUser) { %>
@@ -128,17 +88,12 @@
     <% } else { %>
       <li><a class="nav-link fw-bold" href="/logout">Log Out</a></li>
     <% } %>
-
   </ul>
 </div>
 
-
 <script>
-  const toggleMenu = document.getElementById("toggleMenu");
-  const mobileMenu = document.getElementById("mobileMenu");
-
-  toggleMenu.addEventListener("click", () => {
-    mobileMenu.style.display =
-      mobileMenu.style.display === "block" ? "none" : "block";
-  });
+  toggleMenu.onclick = () => {
+    const m = mobileMenu;
+    m.style.display = (m.style.display === "block") ? "none" : "block";
+  };
 </script>

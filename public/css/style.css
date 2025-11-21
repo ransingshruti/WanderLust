@@ -1,123 +1,227 @@
-body{
+
+body {
     display: flex;
-    flex-direction: column ;
+    flex-direction: column;
     min-height: 100vh;
+    padding-top: 90px !important;
 }
-.container{
+.container, .content {
     flex: 1;
 }
-.navbar{
+.navbar {
     height: 5rem;
-    background-color: white;
+    background: white;
 }
-
-.fa-compass{
+.fa-compass {
     color: #fe424d;
-    font-size:2rem ;
-}
-.nav-link{
-    color: #222222 !important ;
+    font-size: 2rem;
 }
 
-/*footer */
+.nav-link {
+    color: #222 !important;
+}
+/* ------------------ FOOTER ------------------ */
+
+footer {
+    margin-top: auto;
+}
+
+.f-info {
+    display: flex;
+    height: 5rem;
+    background: #ebebeb;
+    justify-content: center;
+    flex-wrap: wrap;
+    text-align: center;
+}
+
 .f-info-links a {
     text-decoration: none;
     color: black;
-}
-footer {
-    margin-top: auto;
 }
 
 .f-info-links a:hover {
     text-decoration: underline;
 }
 
-.f-info {
-    display: flex;
-    height: 5rem;
-    background-color: #ebebeb;
-    justify-content: center;
-    align-items: space-evenly;
-    flex-wrap: wrap;
-    text-align: center;
-}
-
-.f-info-links,
-.f-info-socials {
-    width: 100%;
-
-}
-
 .f-info-socials i {
     margin-left: 0.5rem;
     font-size: 1rem;
 }
-.main-wrapper {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    flex: 1;
-}
 
-.content {
-    flex: 1;
-}
-/* card */
-.listing-card{
+/* ------------------ CARDS ------------------ */
+
+.listing-card {
     border: none !important;
     margin-bottom: 2rem;
+    padding: 0;
 }
+
 .card-img-top {
     border-radius: 1rem !important;
     width: 100% !important;
     object-fit: cover !important;
 }
+
 .card-body {
     padding: 0 !important;
 }
-/* .card-text{
-    font-weight: ;
-} */
-.listing-link{
+
+.listing-link {
     text-decoration: none;
 }
-/* card-effect */
-.card-img-overlay{
+
+.card-img-overlay {
     opacity: 0;
 }
-.card-img-overlay:hover{
+
+.card-img-overlay:hover {
     opacity: 0.2;
-    background-color: white;
+    background: white;
 }
-/* new page */
-.add-btn,.edit-btn{
-    background-color: #fe424d !important;
+
+.card-title {
+    font-size: 1rem;
+    word-break: break-word;
+}
+
+/* Buttons */
+.add-btn, .edit-btn, .edit-btn2 {
+    background: #fe424d !important;
     border: none !important;
 }
 
-/* show page */
-.show-img{
-    height: 30vh;
-}
-.btns{
-    display: flex;
-}
-.show-card{
-    padding-left: 0;
-   padding-right: 0;
-}
-.edit-btn2{
+.edit-btn2 {
     width: 5rem !important;
-    background-color: #fe424d !important;
-    border: none !important;
     margin-left: 7rem !important;
 }
-.delete{
+
+.delete {
     width: 5rem !important;
-    border: none !important; 
+    border: none !important;
 }
-/* map */
-#map{
-    height: 400px;
-    width: 80vh;
+
+/* ------------------ SHOW PAGE ------------------ */
+
+.show-img {
+    width: 100%;
+    height: auto !important;
+    object-fit: cover;
+    border-radius: 15px;
+}
+
+.show-card {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.review-card {
+    border-radius: 12px;
+}
+
+/* ------------------ MAP ------------------ */
+
+#map {
+    width: 100% !important;
+    max-width: 700px;
+    height: 350px;
+    border-radius: 15px;
+    margin: 0 auto;
+}
+
+@media (max-width: 576px) {
+
+    .listing-card {
+        margin: 10px auto;
+        width: 95%;
+    }
+
+    #map {
+        width: 95%;
+        height: 250px;
+        padding: 0;
+    }
+
+    /* Small stars */
+    .starability-slot label {
+        font-size: 15px !important;
+        margin: 0 2px !important;
+    }
+    
+    .starability-result {
+        transform: scale(0.6) !important;
+        transform-origin: left;
+        margin-left: 5px;
+    }
+}
+
+/* ------------------ FILTER ICONS ------------------ */
+/* ONE CLEAN VERSION — SAME RESULT AS YOUR BIG CODE */
+
+/* MOBILE – 6 Icons Per Row */
+@media (max-width: 576px) {
+
+    #filters {
+        display: grid !important;
+        grid-template-columns: repeat(6, 1fr) !important;
+        gap: 3px !important;
+        padding: 3px !important;
+        justify-items: center !important;
+    }
+
+    .filter i {
+        font-size: 14px !important;
+    }
+
+    .filter p {
+        font-size: 7px !important;
+        margin-top: 1px !important;
+    }
+
+    .task-toggle {
+        grid-column: span 6 !important;
+        text-align: left !important;
+        margin-top: 8px !important;
+        padding-left: 5px !important;
+    }
+}
+
+/* TABLET + DESKTOP – All icons one row */
+@media (min-width: 597px) {
+
+    #filters {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        flex-wrap: nowrap !important;
+        gap: 25px !important;
+        width: 100%;
+    }
+
+    .filter {
+        text-align: center !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        flex: 0 0 auto !important;
+    }
+
+    .filter i {
+        font-size: 22px !important;
+    }
+
+    .filter p {
+        font-size: 12px !important;
+    }
+
+    .task-toggle {
+        margin-left: 30px !important;
+        white-space: nowrap !important;
+    }
+}
+
+/* EXTRA LARGE DESKTOP */
+@media (min-width: 992px) {
+    .filter i {
+        font-size: 20px !important;
+    }
 }
