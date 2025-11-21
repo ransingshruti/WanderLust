@@ -100,20 +100,11 @@ const userRoute=require("./router/user")
 app.use("/listings/:id/reviews", reviewRoute);
 app.use("/listings", listingRoute);
 app.use("/",userRoute)
-// root page
-// app.get("/",(req,res)=>{
-//     res.send("This is root page")
-// });
 
-// app.get("/demouser",async(req,res)=>{
-//   let fakeUser=new User({
-//     email:"ransingarti@gmail.com",
-//     username:"aarti"
-//   });
-//   let registereduser=await User.register(fakeUser,"helloworld");
-//   res.send(registereduser)
-// })
-
+app.get("/", async (req, res) => {
+   const listings = await Listing.find();
+  res.render("listings/allListings", { listings });
+});
 
 // Catch-all route for 404 (MUST be at the end, before error handler)
 app.use((req, res, next) => {
@@ -127,7 +118,6 @@ app.use((req, res, next) => {
 //   res.status(statusCode).send(message);
 res.render("error",{message})
 });
-
 
 app.listen(port,(req,res)=>{
     console.log("App Started on port ",port)

@@ -1,75 +1,144 @@
-
-
-
-
 <style>
-  .btn-search{
-    background-color: #fe424d;
-    color: #ffffff;
+  /* NAVBAR stays fixed */
+  .navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 5000;
+    background: white;
+  }
+
+  /* Search Input */
+  .search-input {
     border-radius: 25px;
-    padding: 0 1rem 0 1rem;
+    padding: 10px 20px;
   }
-  .btn-search:hover{
+
+  /* SEARCH layout on small screens */
+  @media (max-width: 768px) {
+    .search-box {
+      flex-grow: 1;
+      margin: 0 10px;
+    }
+  }
+
+  /* SEARCH layout on large screens */
+  @media (min-width: 768px) {
+    .search-box {
+      max-width: 450px;
+      flex-grow: 1;
+      margin: 0 20px;
+    }
+  }
+
+  /* MOBILE MENU (INSIDE FLOW so it pushes content down) */
+  #mobileMenu {
+    display: none;
+    background: white;
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  /* Content pushed below navbar */
+  body {
+    padding-top: 70px;   /* NO GAP on large screen */
+  }
+  .search-icon{
     background-color: #fe424d;
-    color: #ffffff;
+  color: white;
+  border-radius: 25px;
+  padding: 10px 22px;
+  font-weight: 600;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0px 2px 6px rgba(0,0,0,0.12);
+  transition: all 0.2s ease-in-out;
+    
   }
-  .btn-search i{
-    display: inline;
-    margin-right:0.5rem;
-  }
-  .search-input{
-    border-radius: 25px;
-    padding: 0.5rem 3rem;
-    font-size: 1rem;
-  }
+  .btn-search:hover {
+  background-color: #e83844;
+  transform: translateY(-2px);
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+}
+
 </style>
 
 
-<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
-  <div class="container-fluid">
+<!-- TOP NAVBAR -->
+<nav class="navbar border-bottom">
+  <div class="container-fluid d-flex align-items-center">
 
-    <!-- Logo -->
-    <a class="navbar-brand" href="/listings">
-      <i class="fa-solid fa-compass"></i>
+    <!-- LEFT -->
+    <a href="/listings" class="navbar-brand d-flex align-items-center">
+      <i class="fa-solid fa-compass fs-4 me-2"></i>
+      <span class="fw-bold">Explore</span>
     </a>
 
-    <!-- Hamburger -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
-      <span class="navbar-toggler-icon"></span>
+    <!-- CENTER SEARCH -->
+  <form class="search-box d-flex align-items-center" method="GET" action="/search">
+  
+  <input 
+    name="q"
+    type="text" 
+    class="form-control search-input" 
+    placeholder="Search Destinations"
+    value="<%= typeof q !== 'undefined' ? q : '' %>"
+  >
+
+  <button class="btn btn-search ms-2 search-icon">
+    <i class="fa-solid fa-magnifying-glass"></i> Search
+  </button>
+
+</form>
+
+
+
+    <!-- RIGHT DESKTOP MENU -->
+    <div class="d-none d-md-flex align-items-center gap-4">
+      <a class="nav-link fw-bold" href="/listings/new">Airbnb your home</a>
+
+      <% if (!currUser) { %>
+        <a class="nav-link fw-bold" href="/signup">Sign Up</a>
+        <a class="nav-link fw-bold" href="/login">Log In</a>
+      <% } else { %>
+        <a class="nav-link fw-bold" href="/logout">Log Out</a>
+      <% } %>
+    </div>
+
+    <!-- MOBILE MENU BUTTON -->
+    <button class="btn border-0 d-md-none" id="toggleMenu">
+      <i class="fa-solid fa-bars fs-3"></i>
     </button>
 
-
-    <!-- Collapsible Menu -->
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-
-      <!-- LEFT: Explore -->
-      <div class="navbar-nav me-auto">
-        <a class="nav-link" href="/listings">Explore</a>
-      </div>
-
-      <!-- CENTER + MOBILE: SEARCH -->
-      <form class="d-flex mx-auto my-2" role="search">
-        <input class="form-control me-2 search-input" type="search" placeholder="Search Destinations" />
-        <button class="btn btn-search" type="submit"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
-      </form>
-
-
-      <!-- RIGHT: Login/Logout + Airbnb your home -->
-      <div class="navbar-nav ms-auto text-center">
-
-        <a class="nav-link" href="/listings/new">Airbnb your home</a>
-
-        <% if(!currUser) { %>
-          <a class="nav-link" href="/signup"><b>sign up</b></a>
-          <a class="nav-link" href="/login"><b>log in</b></a>
-        <% } %>
-
-        <% if(currUser) { %>
-          <a class="nav-link" href="/logout">log out</a>
-        <% } %>
-
-      </div>
-
-    </div>
   </div>
 </nav>
+
+
+<!-- MOBILE MENU (pushes categories down) -->
+<div id="mobileMenu">
+  <ul class="list-unstyled text-center">
+
+    <li><a class="nav-link fw-bold" href="/listings/new">Airbnb your home</a></li>
+
+    <% if (!currUser) { %>
+      <li><a class="nav-link fw-bold" href="/signup">Sign Up</a></li>
+      <li><a class="nav-link fw-bold" href="/login">Log In</a></li>
+    <% } else { %>
+      <li><a class="nav-link fw-bold" href="/logout">Log Out</a></li>
+    <% } %>
+
+  </ul>
+</div>
+
+
+<script>
+  const toggleMenu = document.getElementById("toggleMenu");
+  const mobileMenu = document.getElementById("mobileMenu");
+
+  toggleMenu.addEventListener("click", () => {
+    mobileMenu.style.display =
+      mobileMenu.style.display === "block" ? "none" : "block";
+  });
+</script>
